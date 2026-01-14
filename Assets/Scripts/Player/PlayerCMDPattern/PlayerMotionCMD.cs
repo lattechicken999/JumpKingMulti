@@ -6,6 +6,10 @@ public interface IPlayerCommand
     void Execute();
     IEnumerator Replay();
 }
+public enum eCollisionDir
+{ 
+    Up, Down, Left, Right,_End
+}
 
 public class MoveCommand : IPlayerCommand
 {
@@ -55,6 +59,49 @@ public class JumpCommand : IPlayerCommand
         yield return null;
     }
 }
+
+public class OnGroundCommand : IPlayerCommand
+{
+    PlayerInvoker _player;
+    bool _isGround;
+    public OnGroundCommand(PlayerInvoker player,bool isGround   )
+    {
+        _player = player;
+        _isGround = isGround;
+    }
+    public void Execute()
+    {
+        _player.OnGround(_isGround);
+    }
+
+    public IEnumerator Replay()
+    {
+        Execute();
+        yield return null;
+    }
+}
+
+public class CollisionCommmand : IPlayerCommand
+{
+    PlayerInvoker _player;
+    eCollisionDir _collisionDirection;
+    public CollisionCommmand(PlayerInvoker player, eCollisionDir dir)
+    {
+        this._player = player;
+        this._collisionDirection = dir;
+    }
+    public void Execute()
+    {
+        _player.PlayerCollisionAct(_collisionDirection);
+    }
+
+    public IEnumerator Replay()
+    {
+        Execute();
+        yield return null;
+    }
+}
+
 public class WaitCommand : IPlayerCommand
 {
     float _waitTime;

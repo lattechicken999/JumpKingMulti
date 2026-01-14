@@ -5,16 +5,17 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 public class PlayerInvoker : MonoBehaviourPun
 {
-    [SerializeField] float _increaseGageValue = 0.2f;
+    [SerializeField] float _increaseGageValue = 1f;
     [SerializeField] float _minimumGageValue = 0.8f;
-    [SerializeField] float _maximumGageValue = 5f;
-    [SerializeField] float _moveSpeed = 3f;
+    [SerializeField] float _maximumGageValue = 10f;
+    [SerializeField] float _moveSpeed = 10f;
 
     private Rigidbody2D _rig;
     private Animator _ani;
 
     private bool _isPressJumpkey;
     private float _jumpGage;
+    private bool _isGround;
     private Vector2 _dir;
 
     private void Start()
@@ -41,20 +42,48 @@ public class PlayerInvoker : MonoBehaviourPun
         if (!_isPressJumpkey) return;
         _isPressJumpkey = false;
 
-        _rig.AddForce((_dir + Vector2.up).normalized * _jumpGage, ForceMode2D.Impulse);
+        float gagePersent = Mathf.Clamp( _jumpGage / _maximumGageValue, _minimumGageValue/_maximumGageValue,0.7f);
+        Vector2 jumpDir = _dir * (1 - gagePersent) + Vector2.up * (gagePersent);
+        _rig.AddForce(jumpDir.normalized * _jumpGage, ForceMode2D.Impulse);
+        //_rig.linearVelocity = _rig.linearVelocity.normalized * 5f;
     }
 
+    public void PlayerCollisionAct(eCollisionDir collisionDirection)
+    {
+        switch (collisionDirection)
+        {
+            case eCollisionDir.Up:
+                if (_rig.linearVelocityY > 0)
+                    _rig.linearVelocity = new Vector2(_rig.linearVelocityX, -_rig.linearVelocityY);
+                break;
+            case eCollisionDir.Left:
+                if (_rig.linearVelocityX < 0)
+                    _rig.linearVelocity = new Vector2(-_rig.linearVelocityX, _rig.linearVelocityY);
+                break;
+            case eCollisionDir.Right:
+                if (_rig.linearVelocityX > 0)
+                    _rig.linearVelocity = new Vector2(-_rig.linearVelocityX, _rig.linearVelocityY);
+                break;
+        }
+
+    }
+    public void OnGround(bool isGround)
+    {
+        _isGround = isGround;
+        if(isGround) _rig.linearVelocity = Vector2.zero;
+    }
     private void PlayerMove()
     {
-        if (_dir != Vector2.zero)
-            _rig.MovePosition(_dir * Time.deltaTime * _moveSpeed);  
+        if (_dir != Vector2.zero && _isGround)
+            transform.Translate( _dir * Time.deltaTime * _moveSpeed);  
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
+
         if (_isPressJumpkey)
         {
-            _jumpGage += _increaseGageValue * Time.deltaTime;
+            _jumpGage += _increaseGageValue * Time.fixedDeltaTime;
 
             //점프게이지 가득차면 점프 실행
             if(_jumpGage > _maximumGageValue)
@@ -67,6 +96,6 @@ public class PlayerInvoker : MonoBehaviourPun
         {
             PlayerMove();
         }
+        
     }
-
 }
