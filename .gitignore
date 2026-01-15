@@ -97,3 +97,13 @@ InitTestScene*.unity*
 
 # Auto-generated scenes by play mode tests
 /[Aa]ssets/[Ii]nit[Tt]est[Ss]cene*.unity*
+Assets/Editor Default Resources
+Assets/ExternalDependencyManager
+Assets/Firebase
+Assets/karsiori
+Assets/mp_character_animation_asset_pack_v1.0
+Assets/Photon
+Assets/Plugins
+Assets/StreamingAssets
+Assets/google-services.json
+Assets/google-services.json.meta
