@@ -31,7 +31,7 @@ public class GotoNextScene : MonoBehaviour
             _fadeoutImg.color = imgColor;
             if (imgColor.a > 0.999)
             {
-                SceneManager.LoadScene((int)eSceneNum.Login);
+                GameManager.Instance.LoadTitleNextScene();
                 yield break;
             }
             yield return _coroutineDelay;
