@@ -77,6 +77,7 @@ public class FirebaseAuthManager : MonoBehaviour
         else
         {
             _user = loginTask.Result.User;
+            GameManager.Instance.LoadLoginNextScene();
         }
     }
     public void OnResistor()
