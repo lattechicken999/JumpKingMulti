@@ -17,7 +17,11 @@ public class FirebaseAuthManager : MonoBehaviour
     [Header("connect component")]
     [SerializeField] TMP_InputField _userEmailInpuField;
     [SerializeField] TMP_InputField _userPasswordField;
-    [SerializeField] TMP_InputField _userNickname;
+    [SerializeField] TMP_InputField _userNicknameField;
+    [SerializeField] PanelOpenCloseAnimation _nicknamePanelAnimation;
+
+    [Header("Prefebs")]
+    [SerializeField] GameObject _userNickNameUI;
 
     private void Start()
     {
@@ -124,23 +128,50 @@ public class FirebaseAuthManager : MonoBehaviour
             _user = resistTask.Result.User;
             if (_user != null)
             {
-                UserProfile profile = new UserProfile { DisplayName = _userNickname.text };
-                Task profileTask = _user.UpdateUserProfileAsync(profile);
-                yield return new WaitUntil(predicate: () => profileTask.IsCompleted);
-
-                if (profileTask.Exception != null)
-                {
-                    Debug.LogWarning($"닉네임 설정 실패 : {profileTask.Exception}");
-                    FirebaseException firebaseEx = profileTask.Exception.GetBaseException() as FirebaseException;
-                    AuthError errorCode = (AuthError)firebaseEx.ErrorCode;
-
-                    AlertManager.Instance.CallAlertUI( "닉네임 설정에 실패하였습니다.");
-                }
-                else
-                {
-                    AlertManager.Instance.CallAlertUI( "생성 완료, 반갑습니다." + _user.DisplayName + "님");
-                }
+                //닉네임 등록 창 활성화
+                _nicknamePanelAnimation.Show();
             }
         }
+    }
+
+    public void ComplateSetUserName()
+    {
+        StartCoroutine(SetUserProfile());
+    }
+    IEnumerator SetUserProfile()
+    {
+        UserProfile profile = new UserProfile { DisplayName = _userNicknameField.text };
+        Task profileTask = _user.UpdateUserProfileAsync(profile);
+        yield return new WaitUntil(predicate: () => profileTask.IsCompleted);
+
+        if (profileTask.Exception != null)
+        {
+            Debug.LogWarning($"닉네임 설정 실패 : {profileTask.Exception}");
+            FirebaseException firebaseEx = profileTask.Exception.GetBaseException() as FirebaseException;
+            AuthError errorCode = (AuthError)firebaseEx.ErrorCode;
+
+            AlertManager.Instance.CallAlertUI("닉네임 설정에 실패하였습니다.");
+        }
+        else
+        {
+            //AlertManager.Instance.CallAlertUI("생성 완료, 반갑습니다." + _user.DisplayName + "님");
+            GameManager.Instance.LoadLoginNextScene();
+        }
+    }
+
+    public void OnClickCancleNicknameWindow()
+    {
+        StartCoroutine(CancleRegisterUser());
+    }
+    private IEnumerator CancleRegisterUser()
+    {
+        var delUserTask = _user.DeleteAsync();
+        yield return new WaitUntil(() => delUserTask.IsCompleted);
+
+        if(delUserTask.Exception != null)
+        {
+            Debug.LogWarning($"계정 생성 취소 - 계정 삭제 실패 {delUserTask.Exception}");
+        }    
+        _nicknamePanelAnimation.HIde();
     }
 }
