@@ -84,15 +84,17 @@ public class OnGroundCommand : IPlayerCommand
 public class CollisionCommmand : IPlayerCommand
 {
     PlayerInvoker _player;
-    eCollisionDir _collisionDirection;
-    public CollisionCommmand(PlayerInvoker player, eCollisionDir dir)
+    Vector2 _playerActiveVelocity;
+    public CollisionCommmand(PlayerInvoker player, Vector2 velocity)
     {
         this._player = player;
-        this._collisionDirection = dir;
+        this._playerActiveVelocity = velocity;
     }
+
     public void Execute()
     {
-        _player.PlayerCollisionAct(_collisionDirection);
+        //_player.PlayerCollisionAct(_collisionDirection);
+        _player.PlayerCollisionAct(_playerActiveVelocity);
     }
 
     public IEnumerator Replay()

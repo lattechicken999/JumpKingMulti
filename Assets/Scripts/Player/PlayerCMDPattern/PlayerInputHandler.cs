@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerInputHandler : MonoBehaviourPunCallbacks
+public class PlayerInputHandler : MonoBehaviourPunCallbacks,IPunObservable
 {
     [SerializeField] CommandRecorder _recorder;
     [SerializeField] PlayerInvoker _player;
@@ -57,5 +57,8 @@ public class PlayerInputHandler : MonoBehaviourPunCallbacks
         command.Execute();
     }
 
-
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        
+    }
 }

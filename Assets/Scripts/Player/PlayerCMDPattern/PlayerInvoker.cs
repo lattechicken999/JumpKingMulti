@@ -19,6 +19,7 @@ public class PlayerInvoker : MonoBehaviourPun
     private Vector2 _dir;
     private Vector2 _collisionedVelocity;
 
+    public Rigidbody2D RigidBody => _rig;
     private void Start()
     {
         _ani = GetComponent<Animator>();
@@ -50,25 +51,29 @@ public class PlayerInvoker : MonoBehaviourPun
         //_rig.linearVelocity = _rig.linearVelocity.normalized * 5f;
     }
 
-    public void PlayerCollisionAct(eCollisionDir collisionDirection)
-    {
-        if (!photonView.IsMine) return;
-        switch (collisionDirection)
-        {
-            case eCollisionDir.Up:
-                if (_rig.linearVelocityY > 0)
-                    _collisionedVelocity = new Vector2(_rig.linearVelocityX, -_rig.linearVelocityY);
-                break;
-            case eCollisionDir.Left:
-                if (_rig.linearVelocityX < 0)
-                    _collisionedVelocity = new Vector2(-_rig.linearVelocityX, _rig.linearVelocityY);
-                break;
-            case eCollisionDir.Right:
-                if (_rig.linearVelocityX > 0)
-                    _collisionedVelocity = new Vector2(-_rig.linearVelocityX, _rig.linearVelocityY);
-                break;
-        }
+    //public void PlayerCollisionAct(eCollisionDir collisionDirection)
+    //{
+    //    if (!photonView.IsMine) return;
+    //    switch (collisionDirection)
+    //    {
+    //        case eCollisionDir.Up:
+    //            if (_rig.linearVelocityY > 0)
+    //                _collisionedVelocity = new Vector2(_rig.linearVelocityX, -_rig.linearVelocityY);
+    //            break;
+    //        case eCollisionDir.Left:
+    //            if (_rig.linearVelocityX < 0)
+    //                _collisionedVelocity = new Vector2(-_rig.linearVelocityX, _rig.linearVelocityY);
+    //            break;
+    //        case eCollisionDir.Right:
+    //            if (_rig.linearVelocityX > 0)
+    //                _collisionedVelocity = new Vector2(-_rig.linearVelocityX, _rig.linearVelocityY);
+    //            break;
+    //    }
 
+    //}
+    public void PlayerCollisionAct(Vector2 activeVelocity)
+    {
+        _rig.linearVelocity = activeVelocity;
     }
     public void OnGround(bool isGround)
     {
@@ -84,11 +89,11 @@ public class PlayerInvoker : MonoBehaviourPun
     private void FixedUpdate()
     {
         if (!photonView.IsMine) return;
-        if(_collisionedVelocity != Vector2.zero)
-        {
-            _rig.linearVelocity = _collisionedVelocity;
-            _collisionedVelocity = Vector2.zero;
-        }
+        //if(_collisionedVelocity != Vector2.zero)
+        //{
+        //    _rig.linearVelocity = _collisionedVelocity;
+        //    _collisionedVelocity = Vector2.zero;
+        //}
         if (_isPressJumpkey)
         {
             _jumpGage += _increaseGageValue * Time.fixedDeltaTime;
@@ -106,4 +111,5 @@ public class PlayerInvoker : MonoBehaviourPun
         }
         
     }
+
 }
