@@ -1,13 +1,7 @@
-﻿using Firebase;
-using Firebase.Auth;
+﻿
 using Firebase.Database;
 using System.Collections;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using TMPro;
-using UnityEditor.VersionControl;
 using UnityEngine;
-using UnityEngine.UI;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 /// Db tree

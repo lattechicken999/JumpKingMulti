@@ -391,7 +391,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6916394539680903346, guid: ce40fbcba860baf449ba06091129b110, type: 3}
   m_PrefabInstance: {fileID: 3893287380504607763}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 3893287380504607764}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c7c500e5298a73f45936ac9d53a4bbcf, type: 3}
@@ -402,7 +402,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5742593624171877114, guid: ce40fbcba860baf449ba06091129b110, type: 3}
   m_PrefabInstance: {fileID: 3893287380504607763}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 3893287380504607764}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bd4031e2de9aa3849b8667e8de8002a8, type: 3}
@@ -997,9 +997,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 225280986259003772, guid: ce40fbcba860baf449ba06091129b110, type: 3}
+      propertyPath: sceneViewId
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 321861226388889000, guid: ce40fbcba860baf449ba06091129b110, type: 3}
       propertyPath: m_Mass
       value: 85
+      objectReference: {fileID: 0}
+    - target: {fileID: 321861226388889000, guid: ce40fbcba860baf449ba06091129b110, type: 3}
+      propertyPath: m_GravityScale
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 1098041165627037940, guid: ce40fbcba860baf449ba06091129b110, type: 3}
       propertyPath: _playerHandler
@@ -1061,11 +1069,48 @@ PrefabInstance:
       propertyPath: _playerHandler
       value: 
       objectReference: {fileID: 49699717}
+    - target: {fileID: 6916394539680903346, guid: ce40fbcba860baf449ba06091129b110, type: 3}
+      propertyPath: _maximumGageValue
+      value: 3500
+      objectReference: {fileID: 0}
+    - target: {fileID: 6916394539680903346, guid: ce40fbcba860baf449ba06091129b110, type: 3}
+      propertyPath: _minimumGageValue
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 6916394539680903346, guid: ce40fbcba860baf449ba06091129b110, type: 3}
+      propertyPath: _increaseGageValue
+      value: 1500
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3744374183298290198, guid: ce40fbcba860baf449ba06091129b110, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3893287380504607765}
   m_SourcePrefab: {fileID: 100100000, guid: ce40fbcba860baf449ba06091129b110, type: 3}
+--- !u!1 &3893287380504607764 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3744374183298290198, guid: ce40fbcba860baf449ba06091129b110, type: 3}
+  m_PrefabInstance: {fileID: 3893287380504607763}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3893287380504607765
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3893287380504607764}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd08475b23aa548b7b9d28397d430b32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: PhotonUnityNetworking.Demos::Photon.Pun.Demo.PunBasics.CameraWork
+  distance: 7
+  height: 3
+  centerOffset: {x: 0, y: 0, z: 0}
+  followOnStart: 0
+  smoothSpeed: 0.125
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

@@ -17,6 +17,7 @@ public class PlayerInvoker : MonoBehaviourPun
     private float _jumpGage;
     private bool _isGround;
     private Vector2 _dir;
+    private Vector2 _collisionedVelocity;
 
     private void Start()
     {
@@ -26,6 +27,7 @@ public class PlayerInvoker : MonoBehaviourPun
         _dir = Vector2.zero; 
         _isPressJumpkey = false;
         _jumpGage = 0f;
+        _collisionedVelocity = Vector2.zero;
     }
 
     public void SetMoveDir(Vector2 dir)
@@ -50,19 +52,20 @@ public class PlayerInvoker : MonoBehaviourPun
 
     public void PlayerCollisionAct(eCollisionDir collisionDirection)
     {
+        if (!photonView.IsMine) return;
         switch (collisionDirection)
         {
             case eCollisionDir.Up:
                 if (_rig.linearVelocityY > 0)
-                    _rig.linearVelocity = new Vector2(_rig.linearVelocityX, -_rig.linearVelocityY);
+                    _collisionedVelocity = new Vector2(_rig.linearVelocityX, -_rig.linearVelocityY);
                 break;
             case eCollisionDir.Left:
                 if (_rig.linearVelocityX < 0)
-                    _rig.linearVelocity = new Vector2(-_rig.linearVelocityX, _rig.linearVelocityY);
+                    _collisionedVelocity = new Vector2(-_rig.linearVelocityX, _rig.linearVelocityY);
                 break;
             case eCollisionDir.Right:
                 if (_rig.linearVelocityX > 0)
-                    _rig.linearVelocity = new Vector2(-_rig.linearVelocityX, _rig.linearVelocityY);
+                    _collisionedVelocity = new Vector2(-_rig.linearVelocityX, _rig.linearVelocityY);
                 break;
         }
 
@@ -80,7 +83,12 @@ public class PlayerInvoker : MonoBehaviourPun
 
     private void FixedUpdate()
     {
-
+        if (!photonView.IsMine) return;
+        if(_collisionedVelocity != Vector2.zero)
+        {
+            _rig.linearVelocity = _collisionedVelocity;
+            _collisionedVelocity = Vector2.zero;
+        }
         if (_isPressJumpkey)
         {
             _jumpGage += _increaseGageValue * Time.fixedDeltaTime;

@@ -1,7 +1,8 @@
-﻿using UnityEngine;
+﻿using Photon.Pun;
+using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerInputHandler : MonoBehaviour
+public class PlayerInputHandler : MonoBehaviourPunCallbacks
 {
     [SerializeField] CommandRecorder _recorder;
     [SerializeField] PlayerInvoker _player;
@@ -19,14 +20,16 @@ public class PlayerInputHandler : MonoBehaviour
     }
     private void Start()
     {
+        if (!photonView.IsMine) return;
         _moveAction.performed += OnMove;
         _moveAction.canceled += OnMove;
         _jumpAction.performed += OnJump;
         _jumpAction.canceled += OnJump;
     }
 
-    private void OnDisable()
+    public override void OnDisable()
     {
+        if (!photonView.IsMine) return;
         _moveAction.performed -= OnMove;
         _moveAction.canceled -= OnMove;
         _jumpAction.performed -= OnJump;
@@ -53,4 +56,6 @@ public class PlayerInputHandler : MonoBehaviour
         lastCommandTime = now;
         command.Execute();
     }
+
+
 }

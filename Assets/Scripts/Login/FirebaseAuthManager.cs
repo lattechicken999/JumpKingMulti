@@ -77,7 +77,7 @@ public class FirebaseAuthManager : MonoBehaviour
         else
         {
             _user = loginTask.Result.User;
-            GameManager.Instance.LoadLoginNextScene();
+            GameManager.Instance.LoadLobbyScene();
         }
     }
     public void OnResistor()
@@ -156,7 +156,7 @@ public class FirebaseAuthManager : MonoBehaviour
         else
         {
             //AlertManager.Instance.CallAlertUI("생성 완료, 반갑습니다." + _user.DisplayName + "님");
-            GameManager.Instance.LoadLoginNextScene();
+            GameManager.Instance.LoadLobbyScene();
         }
     }
 

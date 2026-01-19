@@ -1,4 +1,4 @@
 ﻿public enum eSceneNum
 {
-    Title, Login, InGame,_End
+    Title, Login,Lobby, InGame,_End
 }

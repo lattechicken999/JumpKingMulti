@@ -10,7 +10,11 @@ public class GameManager : Singleton<GameManager>
         else
             SceneManager.LoadScene((int)eSceneNum.InGame);
     }
-    public void LoadLoginNextScene()
+    public void LoadLobbyScene()
+    {
+        SceneManager.LoadScene((int)eSceneNum.Lobby);
+    }
+    public void LoadInGameScene()
     {
         SceneManager.LoadScene((int)eSceneNum.InGame);
     }

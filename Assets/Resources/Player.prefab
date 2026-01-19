@@ -15,6 +15,9 @@ GameObject:
   - component: {fileID: 6916394539680903346}
   - component: {fileID: 5742593624171877114}
   - component: {fileID: 4758696172297901095}
+  - component: {fileID: 7360721197802518302}
+  - component: {fileID: 225280986259003772}
+  - component: {fileID: 8170963160504490877}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -133,7 +136,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.0029998124, y: -0.06899695}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -143,7 +146,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.8080085, y: 0.86200607}
   m_EdgeRadius: 0
 --- !u!50 &321861226388889000
 Rigidbody2D:
@@ -157,10 +160,10 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 4
+  m_Mass: 85
   m_LinearDamping: 0
   m_AngularDamping: 0.05
-  m_GravityScale: 1.5
+  m_GravityScale: 7
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -184,9 +187,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7c500e5298a73f45936ac9d53a4bbcf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInvoker
-  _increaseGageValue: 40
-  _minimumGageValue: 15
-  _maximumGageValue: 70
+  _increaseGageValue: 1500
+  _minimumGageValue: 1000
+  _maximumGageValue: 3500
   _moveSpeed: 4
 --- !u!114 &5742593624171877114
 MonoBehaviour:
@@ -222,6 +225,59 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &7360721197802518302
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3744374183298290198}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da4cfc391ede3cb4e841109578b5d35f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerInputHandler
+  _recorder: {fileID: 5742593624171877114}
+  _player: {fileID: 6916394539680903346}
+--- !u!114 &225280986259003772
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3744374183298290198}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: PhotonUnityNetworking::Photon.Pun.PhotonView
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 8170963160504490877}
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!114 &8170963160504490877
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3744374183298290198}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: PhotonUnityNetworking::Photon.Pun.PhotonTransformView
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 0
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
 --- !u!1 &3999329911472486402
 GameObject:
   m_ObjectHideFlags: 0
@@ -313,7 +369,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f872af64762872343a6a99fbb29bdcdf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerGroundChecker
-  _playerHandler: {fileID: 0}
+  _playerHandler: {fileID: 7360721197802518302}
 --- !u!1 &4656476006521025504
 GameObject:
   m_ObjectHideFlags: 0
@@ -341,7 +397,7 @@ Transform:
   m_GameObject: {fileID: 4656476006521025504}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.027, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -391,7 +447,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.99850625, y: 0.091988206}
+  m_Size: {x: 0.96, y: 0.091988206}
   m_EdgeRadius: 0
 --- !u!114 &3130967401659764018
 MonoBehaviour:
@@ -406,7 +462,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInteractableHandler
   _colDir: 0
-  _playerHandler: {fileID: 0}
+  _playerHandler: {fileID: 7360721197802518302}
 --- !u!1 &7439869204257393837
 GameObject:
   m_ObjectHideFlags: 0
@@ -434,7 +490,7 @@ Transform:
   m_GameObject: {fileID: 7439869204257393837}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.032, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -499,7 +555,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInteractableHandler
   _colDir: 3
-  _playerHandler: {fileID: 0}
+  _playerHandler: {fileID: 7360721197802518302}
 --- !u!1 &9146850040069048640
 GameObject:
   m_ObjectHideFlags: 0
@@ -527,7 +583,7 @@ Transform:
   m_GameObject: {fileID: 9146850040069048640}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0.029, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -592,4 +648,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInteractableHandler
   _colDir: 2
-  _playerHandler: {fileID: 0}
+  _playerHandler: {fileID: 7360721197802518302}
