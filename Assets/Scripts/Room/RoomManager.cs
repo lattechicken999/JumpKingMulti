@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using Photon.Pun;
+using System.Collections;
 
 public class RoomManager : MonoBehaviourPunCallbacks
 {
@@ -7,8 +8,9 @@ public class RoomManager : MonoBehaviourPunCallbacks
     [SerializeField] Transform _startPotint;
     [SerializeField] float _randomPoint;
 
-    private void Start()
+    private IEnumerator Start()
     {
+        yield return new WaitUntil(() => PhotonNetwork.InRoom && PhotonNetwork.IsConnectedAndReady);
         JoinRoom();
     }
     public void JoinRoom()

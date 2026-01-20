@@ -10,10 +10,6 @@ public class PlayerInteractableHandler : MonoBehaviourPun
     private Rigidbody2D _rig;
     private void Awake()
     {
-        if(!photonView.IsMine)
-        {
-            transform.GetComponent<Collider2D>().enabled = false;
-        }
         _rig = transform.GetComponent<Rigidbody2D>();
     }
     private void OnCollisionEnter2D(Collision2D collision)
@@ -32,14 +28,7 @@ public class PlayerInteractableHandler : MonoBehaviourPun
             }
             convertVelocity *= 0.8f;
             convertVelocity *= new Vector2(1,-1);
-            //else if (Mathf.Abs(colsVector.x) > 0.9)
-            //{
-            //    convertVelocity *= Vector2.left;
-            //}
-            //else if (colsVector.y > 0.9)
-            //{
-            //    convertVelocity *= Vector2.down;
-            //}
+
             _playerHandler.RecordAndExcute(new CollisionCommmand(_playerHandler.Player, convertVelocity));
         }
        

@@ -45,32 +45,14 @@ public class PlayerInvoker : MonoBehaviourPun
         if (!_isPressJumpkey) return;
         _isPressJumpkey = false;
 
+        //공중일때만 다이나믹으로 변경 해줌
+        _rig.bodyType = RigidbodyType2D.Dynamic;
+
         float gagePersent = Mathf.Clamp( _jumpGage / _maximumGageValue, _minimumGageValue/_maximumGageValue,0.7f);
         Vector2 jumpDir = _dir * (1 - gagePersent) + Vector2.up * (gagePersent);
         _rig.AddForce(jumpDir.normalized * _jumpGage, ForceMode2D.Impulse);
-        //_rig.linearVelocity = _rig.linearVelocity.normalized * 5f;
     }
 
-    //public void PlayerCollisionAct(eCollisionDir collisionDirection)
-    //{
-    //    if (!photonView.IsMine) return;
-    //    switch (collisionDirection)
-    //    {
-    //        case eCollisionDir.Up:
-    //            if (_rig.linearVelocityY > 0)
-    //                _collisionedVelocity = new Vector2(_rig.linearVelocityX, -_rig.linearVelocityY);
-    //            break;
-    //        case eCollisionDir.Left:
-    //            if (_rig.linearVelocityX < 0)
-    //                _collisionedVelocity = new Vector2(-_rig.linearVelocityX, _rig.linearVelocityY);
-    //            break;
-    //        case eCollisionDir.Right:
-    //            if (_rig.linearVelocityX > 0)
-    //                _collisionedVelocity = new Vector2(-_rig.linearVelocityX, _rig.linearVelocityY);
-    //            break;
-    //    }
-
-    //}
     public void PlayerCollisionAct(Vector2 activeVelocity)
     {
         _rig.linearVelocity = activeVelocity;
@@ -78,7 +60,13 @@ public class PlayerInvoker : MonoBehaviourPun
     public void OnGround(bool isGround)
     {
         _isGround = isGround;
-        if(isGround) _rig.linearVelocity = Vector2.zero;
+
+        if (isGround)
+        {
+            _rig.linearVelocity = Vector2.zero;
+            //땅에 닿아 있을 때는 장애물 취급
+            _rig.bodyType = RigidbodyType2D.Static;
+        }
     }
     private void PlayerMove()
     {
@@ -86,14 +74,12 @@ public class PlayerInvoker : MonoBehaviourPun
             transform.Translate( _dir * Time.deltaTime * _moveSpeed);  
     }
 
+
+
     private void FixedUpdate()
     {
         if (!photonView.IsMine) return;
-        //if(_collisionedVelocity != Vector2.zero)
-        //{
-        //    _rig.linearVelocity = _collisionedVelocity;
-        //    _collisionedVelocity = Vector2.zero;
-        //}
+
         if (_isPressJumpkey)
         {
             _jumpGage += _increaseGageValue * Time.fixedDeltaTime;
