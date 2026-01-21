@@ -22,7 +22,8 @@ public class PlayerInteractableHandler : MonoBehaviourPun
 
             //법선 백터 방식으로 변경
             if (colsVector.y > 0.9f)
-              {
+            {
+                //땅에 닿을 때는 취소
                 _playerHandler.RecordAndExcute(new OnGroundCommand(_playerHandler.Player, true));
                 return;
             }
@@ -35,7 +36,7 @@ public class PlayerInteractableHandler : MonoBehaviourPun
     }
     private void OnCollisionExit2D(Collision2D collision)
     {
-        if(collision.contacts.Length == 0)
+        if (collision.contacts.Length == 0)
         {
             _playerHandler.RecordAndExcute(new OnGroundCommand(_playerHandler.Player, false));
             return;

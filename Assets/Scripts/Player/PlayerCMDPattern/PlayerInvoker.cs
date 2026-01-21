@@ -37,8 +37,11 @@ public class PlayerInvoker : MonoBehaviourPun
     }
     public void JumpStart()
     {
-        _jumpGage = _minimumGageValue;
-        _isPressJumpkey = true;
+        if (_isGround || _rig.linearVelocity == Vector2.zero)
+        {
+            _jumpGage = _minimumGageValue;
+            _isPressJumpkey = true;
+        }
     }
     public void JumpEnd()
     {
@@ -46,7 +49,7 @@ public class PlayerInvoker : MonoBehaviourPun
         _isPressJumpkey = false;
 
         //공중일때만 다이나믹으로 변경 해줌
-        _rig.bodyType = RigidbodyType2D.Dynamic;
+        _rig.constraints = RigidbodyConstraints2D.FreezeRotation;
 
         float gagePersent = Mathf.Clamp( _jumpGage / _maximumGageValue, _minimumGageValue/_maximumGageValue,0.7f);
         Vector2 jumpDir = _dir * (1 - gagePersent) + Vector2.up * (gagePersent);
@@ -65,12 +68,12 @@ public class PlayerInvoker : MonoBehaviourPun
         {
             _rig.linearVelocity = Vector2.zero;
             //땅에 닿아 있을 때는 장애물 취급
-            _rig.bodyType = RigidbodyType2D.Static;
+            _rig.constraints = RigidbodyConstraints2D.FreezeAll;
         }
     }
     private void PlayerMove()
     {
-        if (_dir != Vector2.zero && _isGround)
+        if (_dir != Vector2.zero && (_isGround || _rig.linearVelocity == Vector2.zero))
             transform.Translate( _dir * Time.deltaTime * _moveSpeed);  
     }
 
