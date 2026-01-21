@@ -27,8 +27,19 @@ public class PlayerInteractableHandler : MonoBehaviourPun
                 _playerHandler.RecordAndExcute(new OnGroundCommand(_playerHandler.Player, true));
                 return;
             }
+
+            if(colsVector.y < -0.9f)
+            {
+                //위에 충돌 시
+                convertVelocity *= new Vector2(-1, -1);
+            }
+            else
+            {
+                //좌우 충돌시
+                convertVelocity *= new Vector2(1, -1);
+            }
             convertVelocity *= 0.8f;
-            convertVelocity *= new Vector2(1,-1);
+            
 
             _playerHandler.RecordAndExcute(new CollisionCommmand(_playerHandler.Player, convertVelocity));
         }

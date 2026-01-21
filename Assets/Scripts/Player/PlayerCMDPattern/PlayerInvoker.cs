@@ -48,7 +48,7 @@ public class PlayerInvoker : MonoBehaviourPun
         if (!_isPressJumpkey) return;
         _isPressJumpkey = false;
 
-        //공중일때만 다이나믹으로 변경 해줌
+        //점프시 고정 해제
         _rig.constraints = RigidbodyConstraints2D.FreezeRotation;
 
         float gagePersent = Mathf.Clamp( _jumpGage / _maximumGageValue, _minimumGageValue/_maximumGageValue,0.7f);
@@ -69,6 +69,10 @@ public class PlayerInvoker : MonoBehaviourPun
             _rig.linearVelocity = Vector2.zero;
             //땅에 닿아 있을 때는 장애물 취급
             _rig.constraints = RigidbodyConstraints2D.FreezeAll;
+        }
+        else
+        {
+            _rig.constraints = RigidbodyConstraints2D.FreezeRotation;
         }
     }
     private void PlayerMove()
