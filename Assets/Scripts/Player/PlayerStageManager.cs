@@ -1,16 +1,13 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerStageManager : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private void OnCollisionEnter(Collision collision)
     {
-        
-    }
+        if(collision.gameObject.CompareTag("Target"))
+        {
+            Debug.Log("게임 클리어입니다.");
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        }
     }
 }

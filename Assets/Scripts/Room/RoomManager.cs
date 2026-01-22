@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using Photon.Pun;
 using System.Collections;
+using TMPro;
 
 public class RoomManager : MonoBehaviourPunCallbacks
 {
@@ -17,7 +18,11 @@ public class RoomManager : MonoBehaviourPunCallbacks
     {
         Vector3 spawnPoint = _startPotint.position;
         spawnPoint.x = spawnPoint.x + Random.Range(-_randomPoint, _randomPoint);
-        PhotonNetwork.Instantiate(_playerPrefeb.name, spawnPoint,Quaternion.identity);
+        var  playerObject = PhotonNetwork.Instantiate(_playerPrefeb.name, spawnPoint,Quaternion.identity);
+        var NickNameControl = playerObject.GetComponentInChildren<PlayerNickNameControl>();
+
+        NickNameControl.SetNickName( FirebaseDbManager.Instance.GetUserNickName());
+
     }
     public void ExitRoom()
     {

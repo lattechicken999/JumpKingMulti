@@ -26,4 +26,5 @@ public class FirebaseManager : Singleton<FirebaseManager>
             Debug.LogError("Firebase authentication failed");
         }
     }
+
 }
