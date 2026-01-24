@@ -20,7 +20,8 @@ public class PlayerTimeManager : MonoBehaviour,IGameClearOpserver
     }
     void Update()
     {
-        _playTime += Time.deltaTime;
+        if(_isPlaying)
+            _playTime += Time.deltaTime;
     }
 
     public void GameClear()
