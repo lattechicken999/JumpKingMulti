@@ -78,7 +78,7 @@ public class FirebaseAuthManager : MonoBehaviour
         {
             _user = loginTask.Result.User;
             FirebaseDbManager.Instance.LoadUserInfo();
-            GameManager.Instance.LoadLobbyScene();
+            SceneChangeManager.Instance.LoadLobbyScene();
         }
     }
     public void OnResistor()
@@ -157,7 +157,7 @@ public class FirebaseAuthManager : MonoBehaviour
         else
         {
             FirebaseDbManager.Instance.SaveUserInfo();
-            GameManager.Instance.LoadLobbyScene();
+            SceneChangeManager.Instance.LoadLobbyScene();
         }
     }
 

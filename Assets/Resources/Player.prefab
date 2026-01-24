@@ -115,8 +115,8 @@ GameObject:
   - component: {fileID: 1911946909472783963}
   - component: {fileID: 321861226388889000}
   - component: {fileID: 6916394539680903346}
-  - component: {fileID: 5742593624171877114}
   - component: {fileID: 4758696172297901095}
+  - component: {fileID: 5742593624171877114}
   - component: {fileID: 7360721197802518302}
   - component: {fileID: 225280986259003772}
   - component: {fileID: 5838031320475389370}
@@ -124,6 +124,7 @@ GameObject:
   - component: {fileID: 4405355804522578990}
   - component: {fileID: 1600993289209600198}
   - component: {fileID: 1310708494860337954}
+  - component: {fileID: 2078035763783973598}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -294,18 +295,6 @@ MonoBehaviour:
   _minimumGageValue: 1000
   _maximumGageValue: 3500
   _moveSpeed: 4
---- !u!114 &5742593624171877114
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3744374183298290198}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd4031e2de9aa3849b8667e8de8002a8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CommandRecorder
 --- !u!95 &4758696172297901095
 Animator:
   serializedVersion: 7
@@ -328,6 +317,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &5742593624171877114
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3744374183298290198}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd4031e2de9aa3849b8667e8de8002a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CommandRecorder
 --- !u!114 &7360721197802518302
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -437,6 +438,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerNickNameControl
   _nickNameText: {fileID: 2616434067449752367}
+--- !u!114 &2078035763783973598
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3744374183298290198}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14bec30ac01312d4abaf32d5816c1847, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerTimeManager
 --- !u!1 &8160819561614150715
 GameObject:
   m_ObjectHideFlags: 0

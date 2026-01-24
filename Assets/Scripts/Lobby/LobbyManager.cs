@@ -26,6 +26,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         Debug.Log("Entered Room");
-        GameManager.Instance.LoadInGameScene();
+        SceneChangeManager.Instance.LoadInGameScene();
     }
 }

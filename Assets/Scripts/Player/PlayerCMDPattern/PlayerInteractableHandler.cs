@@ -15,6 +15,13 @@ public class PlayerInteractableHandler : MonoBehaviourPun
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (!photonView.IsMine) return;
+        if(collision.gameObject.CompareTag("Target"))
+        {
+            InGameManager.Instance.SendToSubGameClear();
+
+            //골에 충돌하면 출동이벤트 중단.
+            return;
+        }
         foreach(var contact in collision.contacts)
         {
             var colsVector = contact.normal;

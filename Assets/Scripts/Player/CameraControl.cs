@@ -7,6 +7,7 @@ public class CameraControl : MonoBehaviourPun
     private Renderer _renderer;
 
     bool _viewPortUpdateFlag = false;
+
     private void Awake()
     {
         _renderer = GetComponent<Renderer>();

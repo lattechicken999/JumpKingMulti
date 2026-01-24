@@ -109,7 +109,29 @@ public class FirebaseDbManager : Singleton<FirebaseDbManager>
 
     public void SaveUserClearTime(long timeStamp)
     {
+        if(_userClearTime == 0 || (_userClearTime > timeStamp))
+        {
+            //기록 갱신
+            _userClearTime = timeStamp;
+            StartCoroutine(SetUserBestClearTime());
+        }
+        else
+        {
+            //pass
+        }
+    }
+    private IEnumerator SetUserBestClearTime()
+    {
+        var SetBestClearTimeTask = _dbRef.Child("Nicknames")
+                                                    .Child(FirebaseAuthManager.User.DisplayName)
+                                                    .Child("BestClearTime")
+                                                    .SetValueAsync(_userClearTime);
+        yield return new WaitUntil(() => SetBestClearTimeTask.IsCompleted);
 
+        if (SetBestClearTimeTask.Exception != null)
+        {
+            Debug.LogWarning($"DB에서 시간 기록 저장 실패 : {SetBestClearTimeTask.Exception}");
+        }
     }
     private IEnumerator GetUserBestClearTime()
     {
@@ -125,7 +147,10 @@ public class FirebaseDbManager : Singleton<FirebaseDbManager>
         }
         else
         {
-            _userClearTime = (long)GetBestClearTimeTask.Result.Value;
+            if (GetBestClearTimeTask.Result.Exists)
+                _userClearTime = (long)GetBestClearTimeTask.Result.Value;
+            else
+                _userClearTime = 0;
         }
     }
 }

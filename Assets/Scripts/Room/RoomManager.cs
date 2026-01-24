@@ -9,6 +9,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
     [SerializeField] Transform _startPotint;
     [SerializeField] float _randomPoint;
 
+
     private IEnumerator Start()
     {
         yield return new WaitUntil(() => PhotonNetwork.InRoom && PhotonNetwork.IsConnectedAndReady);
@@ -31,6 +32,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
     public override void OnLeftRoom()
     {
         Debug.Log("방을 나갔습니다.");
-        GameManager.Instance.LoadLobbyScene();
+        SceneChangeManager.Instance.LoadLobbyScene();
     }
+
 }

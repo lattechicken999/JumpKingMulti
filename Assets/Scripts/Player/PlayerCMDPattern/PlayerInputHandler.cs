@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerInputHandler : MonoBehaviourPunCallbacks,IPunObservable
+public class PlayerInputHandler : MonoBehaviourPunCallbacks,IPunObservable,IGameClearOpserver
 {
     [SerializeField] CommandRecorder _recorder;
     [SerializeField] PlayerInvoker _player;
@@ -60,5 +60,17 @@ public class PlayerInputHandler : MonoBehaviourPunCallbacks,IPunObservable
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
         
+    }
+
+    public void GameClear()
+    {
+        if(photonView.IsMine)
+        {
+            //게임이 클리어 되면 플레이어 조작 금지
+            _moveAction.performed -= OnMove;
+            _moveAction.canceled -= OnMove;
+            _jumpAction.performed -= OnJump;
+            _jumpAction.canceled -= OnJump;
+        }
     }
 }

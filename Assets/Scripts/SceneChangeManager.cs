@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameManager : Singleton<GameManager>
+public class SceneChangeManager : Singleton<SceneChangeManager>
 {
+    /// 씬 컨트롤
     public void LoadTitleNextScene()
     {
         if (FirebaseAuthManager.User == null)
@@ -18,4 +19,6 @@ public class GameManager : Singleton<GameManager>
     {
         SceneManager.LoadScene((int)eSceneNum.InGame);
     }
+
+
 }
