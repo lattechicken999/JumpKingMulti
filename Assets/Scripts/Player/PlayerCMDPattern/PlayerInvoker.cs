@@ -68,17 +68,18 @@ public class PlayerInvoker : MonoBehaviourPun
         {
             _rig.linearVelocity = Vector2.zero;
             //땅에 닿아 있을 때는 장애물 취급
-            _rig.constraints = RigidbodyConstraints2D.FreezeAll;
+            //_rig.constraints = RigidbodyConstraints2D.FreezeAll;
         }
         else
         {
-            _rig.constraints = RigidbodyConstraints2D.FreezeRotation;
+            //_rig.constraints = RigidbodyConstraints2D.FreezeRotation;
         }
     }
     private void PlayerMove()
     {
         if (_dir != Vector2.zero && (_isGround || _rig.linearVelocity == Vector2.zero))
-            transform.Translate( _dir * Time.deltaTime * _moveSpeed);  
+            transform.Translate(_dir * Time.deltaTime * _moveSpeed);  
+            //_rig.MovePosition(_rig.position + _dir * Time.deltaTime * _moveSpeed);
     }
 
 
