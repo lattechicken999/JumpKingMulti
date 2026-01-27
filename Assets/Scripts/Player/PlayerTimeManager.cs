@@ -3,8 +3,8 @@
 public class PlayerTimeManager : MonoBehaviour,IGameClearOpserver
 {
 
-    static float _playTime = 0;
-    public static float PlayTime => _playTime;
+    static long _playTime = 0;
+    public static long PlayTime => _playTime;
 
     bool _isPlaying;
 
@@ -21,11 +21,12 @@ public class PlayerTimeManager : MonoBehaviour,IGameClearOpserver
     void Update()
     {
         if(_isPlaying)
-            _playTime += Time.deltaTime;
+            _playTime += (long)Time.deltaTime;
     }
 
     public void GameClear()
     {
         _isPlaying = false;
+        FirebaseDbManager.Instance.SaveUserClearTime(PlayTime);
     }
 }

@@ -17,7 +17,6 @@ public class PlayerInvoker : MonoBehaviourPun
     private float _jumpGage;
     private bool _isGround;
     private Vector2 _dir;
-    private Vector2 _collisionedVelocity;
 
     public Rigidbody2D RigidBody => _rig;
     private void Start()
@@ -28,7 +27,6 @@ public class PlayerInvoker : MonoBehaviourPun
         _dir = Vector2.zero; 
         _isPressJumpkey = false;
         _jumpGage = 0f;
-        _collisionedVelocity = Vector2.zero;
     }
 
     public void SetMoveDir(Vector2 dir)

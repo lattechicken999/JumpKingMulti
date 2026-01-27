@@ -153,4 +153,5 @@ public class FirebaseDbManager : Singleton<FirebaseDbManager>
                 _userClearTime = 0;
         }
     }
+
 }
