@@ -1,9 +1,11 @@
 ﻿using Photon.Pun;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class LobbyManager : MonoBehaviourPunCallbacks
 {
+    [SerializeField] Image _blind;
     private void Awake()
     {
         PhotonNetwork.AutomaticallySyncScene = true;
@@ -17,6 +19,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     public override void OnConnectedToMaster()
     {
         Debug.Log("서버 연결 완료");
+        _blind.gameObject.SetActive(false);
     }
     public void NewGame()
     {

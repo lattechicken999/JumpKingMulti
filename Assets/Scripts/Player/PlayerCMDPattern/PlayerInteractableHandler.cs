@@ -12,22 +12,19 @@ public class PlayerInteractableHandler : MonoBehaviourPun
     {
         _rig = transform.GetComponent<Rigidbody2D>();
     }
-    private void OnTriggerEnter(Collider other)
+
+    private void OnCollisionEnter2D(Collision2D collision)
     {
         if (!photonView.IsMine) return;
-        if (other.gameObject.CompareTag("Target"))
+        if (collision.gameObject.CompareTag("Target"))
         {
             InGameManager.Instance.SendToSubGameClear();
 
             //골에 충돌하면 출동이벤트 중단.
             return;
         }
-    }
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (!photonView.IsMine) return;
 
-        foreach(var contact in collision.contacts)
+        foreach (var contact in collision.contacts)
         {
             var colsVector = contact.normal;
             Vector2 convertVelocity = collision.relativeVelocity;
