@@ -1,6 +1,9 @@
 ﻿
 using Firebase.Database;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -20,8 +23,13 @@ using UnityEngine;
 public class UserData
 {
     public string NickName;
-    public string Email;
-    public long BestClea;
+    public long BestClearTime;
+
+    public UserData(string nickname, long bestClearTime)
+    {
+        NickName = nickname;
+        BestClearTime = bestClearTime;
+    }
 }
 public class FirebaseDbManager : Singleton<FirebaseDbManager>
 {
@@ -32,7 +40,12 @@ public class FirebaseDbManager : Singleton<FirebaseDbManager>
     static public DatabaseReference _UserInfoRef => _userInfoRef;
 
     private long _userClearTime;
+    private Dictionary<string, long> _playerClearInfo;
+    private List<UserData> _rankList;
 
+    public List<UserData> RankList => _rankList;
+
+    
     private void Start()
     {
         _dbRef = FirebaseManager.Instance.Database;
@@ -154,4 +167,59 @@ public class FirebaseDbManager : Singleton<FirebaseDbManager>
         }
     }
 
+    public IEnumerator StartGetRankInfo()
+    {
+        yield return null; //시간 저장을 위해 한프레임 늦게 실행
+        yield return StartCoroutine(GetPlayersClearInfo());
+        yield return StartCoroutine(SortPlayerClearInfo());
+    }
+    private IEnumerator GetPlayersClearInfo()
+    {
+        if (_playerClearInfo != null) _playerClearInfo.Clear();
+        else                                   _playerClearInfo = new Dictionary<string, long>();
+
+        var getPlayerNickNamesTask = _dbRef.Child("Nicknames").GetValueAsync();
+        yield return new WaitUntil(() => getPlayerNickNamesTask.IsCompleted);
+
+        if (getPlayerNickNamesTask.Exception != null)
+        {
+            Debug.LogWarning($"Db에서 유저 닉네임들 가져오기 실패 : {getPlayerNickNamesTask.Exception}");
+        }
+        else
+        {
+            
+            foreach (var child in getPlayerNickNamesTask.Result.Children)
+            {
+                _playerClearInfo.Add(child.Key, (long)child.Child("BestClearTime").Value);
+            }
+        }                           
+    }
+
+    private IEnumerator SortPlayerClearInfo()
+    {
+        //초기화
+        if (_rankList == null) _rankList = new List<UserData>();
+        else _rankList.Clear();
+
+        if (_playerClearInfo == null)
+        {
+            Debug.LogError("Player Clear Info Dictionary 가 비어져 있음");
+            yield break;
+        }
+        if (_playerClearInfo.Count < 2)
+        {
+            if (_playerClearInfo.Count == 0) yield break;
+            string nickname = _playerClearInfo.Keys.ToList()[0];
+            long time = _playerClearInfo.Values.ToList<long>()[0];
+            _rankList.Add(new UserData(nickname, time));
+            yield break;
+        }
+
+        var sortedClearInfo = _playerClearInfo.OrderBy(x => x.Value);
+
+        foreach(var ci in sortedClearInfo)
+        {
+            _rankList.Add(new UserData(ci.Key, ci.Value));
+        }
+    }
 }
