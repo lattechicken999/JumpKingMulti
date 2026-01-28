@@ -92,31 +92,20 @@ public class FirebaseDbManager : Singleton<FirebaseDbManager>
     }
     private IEnumerator SetUserInfo()
     {
-        var SetNickNameDataTask = _dbRef.Child("Nicknames")
-                                                            .SetValueAsync(FirebaseAuthManager.User.DisplayName);
-        yield return new WaitUntil(()=> SetNickNameDataTask.IsCompleted);
+        var SetEmailTask = _dbRef.Child("Nicknames")
+                                                .Child(FirebaseAuthManager.User.DisplayName)
+                                                .Child("Email")
+                                                .SetValueAsync(FirebaseAuthManager.User.Email);
+        yield return new WaitUntil( ()=> SetEmailTask.IsCompleted);
 
-        if(SetNickNameDataTask.Exception != null)
+        if(SetEmailTask.Exception != null)
         {
-            Debug.LogWarning($"DB 에 닉네임 저장 실패 : {SetNickNameDataTask.Exception}");
+            Debug.LogWarning($"DB에 이메일 저장 실패 : {SetEmailTask.Exception}");
         }
         else
         {
-            var SetEmailTask = _dbRef.Child("Nicknames")
-                                                   .Child(FirebaseAuthManager.User.DisplayName)
-                                                   .Child("Email")
-                                                   .SetValueAsync(FirebaseAuthManager.User.Email);
-            yield return new WaitUntil( ()=> SetEmailTask.IsCompleted);
-
-            if(SetEmailTask.Exception != null)
-            {
-                Debug.LogWarning($"DB에 이메일 저장 실패 : {SetEmailTask.Exception}");
-            }
-            else
-            {
-                //저장 하면 다시 로드함
-                LoadUserInfo();
-            }
+            //저장 하면 다시 로드함
+            LoadUserInfo();
         }
     }
 
