@@ -32,6 +32,8 @@ public class InGameManager : Singleton<InGameManager>
         {
             s.GameClear();
         }
+
+        BGMSoundManager.Instance.PlayClip(eBgmClip.GameClear);
     }
 
 }

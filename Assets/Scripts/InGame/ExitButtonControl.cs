@@ -5,6 +5,7 @@ public class ExitButtonControl : MonoBehaviourPunCallbacks
 {
     public void OnExitIngame()
     {
+        EffectSoundManager.Instance.PlayClickSound();
         InGameManager.Instance.UnregistAll();
 
         PhotonNetwork.LeaveRoom();

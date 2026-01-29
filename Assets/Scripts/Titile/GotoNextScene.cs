@@ -18,6 +18,7 @@ public class GotoNextScene : MonoBehaviour
     {
         if(Keyboard.current.anyKey.isPressed)
         {
+            EffectSoundManager.Instance.PlayClickSound();
             StartCoroutine(FadeoutView());
         }
     }

@@ -23,6 +23,10 @@ public class MoveCommand : IPlayerCommand
     public void Execute()
     {
         _player.SetMoveDir(_dir);
+        if(_dir == Vector2.zero) 
+            EffectSoundManager.Instance.StopPlayWalkSound();
+        else
+            EffectSoundManager.Instance.StartPlayWalkSound();
     }
 
     public IEnumerator Replay()
@@ -50,6 +54,7 @@ public class JumpCommand : IPlayerCommand
         else
         {
             _player.JumpEnd();
+
         }
     }
 
@@ -95,6 +100,7 @@ public class CollisionCommmand : IPlayerCommand
     {
         //_player.PlayerCollisionAct(_collisionDirection);
         _player.PlayerCollisionAct(_playerActiveVelocity);
+        
     }
 
     public IEnumerator Replay()

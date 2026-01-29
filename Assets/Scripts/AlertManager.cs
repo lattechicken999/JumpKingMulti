@@ -10,5 +10,6 @@ public class AlertManager : Singleton<AlertManager>
         var alertObject = Instantiate(_AlertObjectPrefeb);
         AlertControl alertControl = alertObject.GetComponent<AlertControl>();
         alertControl.UpdateTextMessage(message);
+        EffectSoundManager.Instance.PlayErrorSound();
     }
 }

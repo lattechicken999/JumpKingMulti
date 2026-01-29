@@ -42,6 +42,8 @@ public class PlayerInputHandler : MonoBehaviourPunCallbacks,IPunObservable,IGame
     }
     private void OnJump(InputAction.CallbackContext ctx)
     {
+        if(!ctx.ReadValueAsButton())
+            EffectSoundManager.Instance.PlayJumpSound();
         RecordAndExcute(new JumpCommand(_player,ctx.ReadValueAsButton()));
     }
     public void RecordAndExcute(IPlayerCommand command)

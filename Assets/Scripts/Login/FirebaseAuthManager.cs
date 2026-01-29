@@ -31,6 +31,7 @@ public class FirebaseAuthManager : MonoBehaviour
     public void OnLogin()
     {
         StartCoroutine(LoginCoroutine(_userEmailInpuField.text,_userPasswordField.text));
+        EffectSoundManager.Instance.PlayClickSound();
     }
     IEnumerator LoginCoroutine(string email, string password)
     {
@@ -84,6 +85,7 @@ public class FirebaseAuthManager : MonoBehaviour
     public void OnResistor()
     {
         StartCoroutine(ResisterCoroutine(_userEmailInpuField.text, _userPasswordField.text));
+        EffectSoundManager.Instance.PlayClickSound();
     }
     IEnumerator ResisterCoroutine(string email, string password)
     {
@@ -139,6 +141,7 @@ public class FirebaseAuthManager : MonoBehaviour
     public void ComplateSetUserName()
     {
         StartCoroutine(SetUserProfile());
+        EffectSoundManager.Instance.PlayClickSound();
     }
     IEnumerator SetUserProfile()
     {
@@ -164,6 +167,7 @@ public class FirebaseAuthManager : MonoBehaviour
     public void OnClickCancleNicknameWindow()
     {
         StartCoroutine(CancleRegisterUser());
+        EffectSoundManager.Instance.PlayClickSound();
     }
     private IEnumerator CancleRegisterUser()
     {

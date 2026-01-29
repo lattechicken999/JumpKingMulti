@@ -24,6 +24,8 @@ public class PlayerInteractableHandler : MonoBehaviourPun
             return;
         }
 
+        EffectSoundManager.Instance.PlayCollisionSound();
+
         foreach (var contact in collision.contacts)
         {
             var colsVector = contact.normal;

@@ -15,6 +15,8 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         PhotonNetwork.PhotonServerSettings.AppSettings.FixedRegion = "kr";
         PhotonNetwork.PhotonServerSettings.AppSettings.UseNameServer = true;
         PhotonNetwork.ConnectUsingSettings();
+
+        BGMSoundManager.Instance.PlayClip(eBgmClip.Lobby);
     }
     public override void OnConnectedToMaster()
     {
@@ -23,6 +25,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     }
     public void NewGame()
     {
+        EffectSoundManager.Instance.PlayClickSound();
         PhotonNetwork.JoinRandomOrCreateRoom();
     }
 

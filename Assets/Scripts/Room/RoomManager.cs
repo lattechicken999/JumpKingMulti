@@ -24,6 +24,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
 
         NickNameControl.SetNickName( FirebaseDbManager.Instance.GetUserNickName());
 
+        BGMSoundManager.Instance.PlayClip(eBgmClip.InGame);
     }
     public void ExitRoom()
     {
