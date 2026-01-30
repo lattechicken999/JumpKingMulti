@@ -2,10 +2,14 @@
 
 public class SettingUIControl : MonoBehaviour
 {
-    [SerializeField] GameObject _settingUiPrefeb;
+    [SerializeField] GameObject _settingUi;
 
     public void OnSettingUI()
     {
-        Instantiate(_settingUiPrefeb);
+        _settingUi.SetActive(true);
+    }
+    public void OnCloseUI()
+    {
+        _settingUi.SetActive(false);
     }
 }

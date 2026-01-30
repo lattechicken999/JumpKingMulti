@@ -25,6 +25,14 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     }
     public void NewGame()
     {
+        PlayerPrefs.DeleteKey("positionX");
+        PlayerPrefs.DeleteKey("positionY");
+        EffectSoundManager.Instance.PlayClickSound();
+        PhotonNetwork.JoinRandomOrCreateRoom();
+    }
+
+    public void ContinueGame()
+    { 
         EffectSoundManager.Instance.PlayClickSound();
         PhotonNetwork.JoinRandomOrCreateRoom();
     }

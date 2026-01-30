@@ -8,7 +8,9 @@ public class PlayerInputHandler : MonoBehaviourPunCallbacks,IPunObservable,IGame
     [SerializeField] PlayerInvoker _player;
     private InputAction _moveAction;
     private InputAction _jumpAction;
+    private InputAction _settingAction;
 
+    private SpriteRenderer _playerRenderer;
     float lastCommandTime;
 
     public PlayerInvoker Player => _player;
@@ -17,6 +19,7 @@ public class PlayerInputHandler : MonoBehaviourPunCallbacks,IPunObservable,IGame
     {
         _moveAction = InputSystem.actions["MoveDirection"];
         _jumpAction = InputSystem.actions["Jump"];
+        _playerRenderer = GetComponent<SpriteRenderer>();
     }
     private void Start()
     {
@@ -36,9 +39,23 @@ public class PlayerInputHandler : MonoBehaviourPunCallbacks,IPunObservable,IGame
         _jumpAction.canceled -= OnJump;
     }
 
+    [PunRPC]
+    private void SetSpriteRendererFlip(float dirx)
+    {
+        if (dirx < 0)
+        {
+            _playerRenderer.flipX = true;
+        }
+        else
+        {
+            _playerRenderer.flipX = false;
+        }
+    }
     private void OnMove(InputAction.CallbackContext ctx)
     {
-        RecordAndExcute(new MoveCommand(_player, ctx.ReadValue<Vector2>()));
+        Vector2 dir = ctx.ReadValue<Vector2>();
+        photonView.RPC("SetSpriteRendererFlip", RpcTarget.All, dir.x);
+        RecordAndExcute(new MoveCommand(_player, dir));
     }
     private void OnJump(InputAction.CallbackContext ctx)
     {

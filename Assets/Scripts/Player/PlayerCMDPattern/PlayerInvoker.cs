@@ -23,6 +23,7 @@ public class PlayerInvoker : MonoBehaviourPun
     {
         _ani = GetComponent<Animator>();
         _rig = GetComponent<Rigidbody2D>();
+        
 
         _dir = Vector2.zero; 
         _isPressJumpkey = false;
@@ -39,6 +40,7 @@ public class PlayerInvoker : MonoBehaviourPun
         {
             _jumpGage = _minimumGageValue;
             _isPressJumpkey = true;
+            _ani.SetBool("JumpKeyPres", true);
         }
     }
     public void JumpEnd()
@@ -52,6 +54,8 @@ public class PlayerInvoker : MonoBehaviourPun
         float gagePersent = Mathf.Clamp( _jumpGage / _maximumGageValue, _minimumGageValue/_maximumGageValue,0.7f);
         Vector2 jumpDir = _dir * (1 - gagePersent) + Vector2.up * (gagePersent);
         _rig.AddForce(jumpDir.normalized * _jumpGage, ForceMode2D.Impulse);
+
+        _ani.SetBool("JumpKeyPres", false);
     }
 
     public void PlayerCollisionAct(Vector2 activeVelocity)
@@ -61,7 +65,7 @@ public class PlayerInvoker : MonoBehaviourPun
     public void OnGround(bool isGround)
     {
         _isGround = isGround;
-
+        _ani.SetBool("IsGround", _isGround);
         if (isGround)
         {
             _rig.linearVelocity = Vector2.zero;
@@ -76,11 +80,18 @@ public class PlayerInvoker : MonoBehaviourPun
     private void PlayerMove()
     {
         if (_dir != Vector2.zero && (_isGround || _rig.linearVelocity == Vector2.zero))
-            transform.Translate(_dir * Time.deltaTime * _moveSpeed);  
+        {
+            transform.Translate(_dir * Time.deltaTime * _moveSpeed);
+            _ani.SetFloat("Speed",1);
+        }
+        else
+        {
+            _ani.SetFloat("Speed", 0);
+        }
             //_rig.MovePosition(_rig.position + _dir * Time.deltaTime * _moveSpeed);
     }
 
-
+    
 
     private void FixedUpdate()
     {

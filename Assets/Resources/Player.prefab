@@ -36,7 +36,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 1.4}
+  m_AnchoredPosition: {x: 0.06, y: 0.63}
   m_SizeDelta: {x: 10, y: 2.7392}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &9119278207696834998
@@ -60,7 +60,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!114 &2934346674046129044
 MonoBehaviour:
@@ -125,6 +125,8 @@ GameObject:
   - component: {fileID: 1600993289209600198}
   - component: {fileID: 1310708494860337954}
   - component: {fileID: 2078035763783973598}
+  - component: {fileID: 6310319558392359974}
+  - component: {fileID: 5918028481498404731}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -194,8 +196,8 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
+  m_SortingOrder: 5
+  m_Sprite: {fileID: 21300000, guid: 901639f1dddd7b04aa3c943786d274d5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -240,17 +242,17 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: -0.49849206}
   m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
+    border: {x: 0.79499996, y: 0.14999999, z: 0.825, w: 1.1}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
+    oldSize: {x: 2.56, y: 2.56}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 1, y: 1.3148371}
   m_EdgeRadius: 0
 --- !u!50 &321861226388889000
 Rigidbody2D:
@@ -305,7 +307,7 @@ Animator:
   m_GameObject: {fileID: 3744374183298290198}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 053da6b7d4bfe394aa8a3177aaca5257, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -365,6 +367,7 @@ MonoBehaviour:
   - {fileID: 7360721197802518302}
   - {fileID: -8975549817363016218}
   - {fileID: 4405355804522578990}
+  - {fileID: 5918028481498404731}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -450,6 +453,45 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14bec30ac01312d4abaf32d5816c1847, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerTimeManager
+--- !u!114 &6310319558392359974
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3744374183298290198}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3aee80bd7747ba44c85da74da551bc80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerAutoSave
+--- !u!114 &5918028481498404731
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3744374183298290198}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b8c4a61274f60b4ea5fb4299cfdbf14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: PhotonUnityNetworking::Photon.Pun.PhotonAnimatorView
+  ShowLayerWeightsInspector: 1
+  ShowParameterInspector: 1
+  m_SynchronizeParameters:
+  - Type: 1
+    SynchronizeType: 2
+    Name: Speed
+  - Type: 4
+    SynchronizeType: 1
+    Name: JumpKeyPres
+  - Type: 4
+    SynchronizeType: 1
+    Name: IsGround
+  m_SynchronizeLayers:
+  - SynchronizeType: 0
+    LayerIndex: 0
 --- !u!1 &8160819561614150715
 GameObject:
   m_ObjectHideFlags: 0
@@ -524,8 +566,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4278239977
+  m_fontColor: {r: 0.9150943, g: 0.7609362, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:

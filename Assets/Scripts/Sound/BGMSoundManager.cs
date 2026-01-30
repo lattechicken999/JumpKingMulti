@@ -15,6 +15,17 @@ public class BGMSoundManager : Singleton<BGMSoundManager>
     {
         base.Awake();
         _audio = GetComponent<AudioSource>();
+        Debug.Log(" 호출 됨");
+        
+        if (PlayerPrefs.HasKey("Volume"))
+        {
+            _audio.volume = PlayerPrefs.GetFloat("Volume");
+            Debug.Log(_audio.volume);
+        }
+        if (PlayerPrefs.HasKey("Mute"))
+        {
+            SetBGMMuteState(PlayerPrefs.GetInt("Mute") == 1);
+        }
     }
 
     private void Start()
@@ -32,5 +43,18 @@ public class BGMSoundManager : Singleton<BGMSoundManager>
     public void BGMSoundVolumChange(float vol)
     {
         _audio.volume = vol;
+        PlayerPrefs.SetFloat("Volume", vol);
+    }
+    public float GetBGMSoundVolume()
+    {
+        return _audio.volume;
+    }
+    public bool GetBGMMuteState()
+    {
+        return _audio.mute;
+    }
+    public void SetBGMMuteState(bool m)
+    {
+        _audio.mute = m;
     }
 }

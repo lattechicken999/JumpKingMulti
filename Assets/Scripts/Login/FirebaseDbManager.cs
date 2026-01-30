@@ -179,7 +179,8 @@ public class FirebaseDbManager : Singleton<FirebaseDbManager>
             
             foreach (var child in getPlayerNickNamesTask.Result.Children)
             {
-                _playerClearInfo.Add(child.Key, (long)child.Child("BestClearTime").Value);
+                if(child.Child("BestClearTime").Exists)
+                    _playerClearInfo.Add(child.Key, (long)child.Child("BestClearTime").Value);
             }
         }                           
     }

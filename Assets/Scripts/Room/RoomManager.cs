@@ -17,9 +17,19 @@ public class RoomManager : MonoBehaviourPunCallbacks
     }
     public void JoinRoom()
     {
-        Vector3 spawnPoint = _startPotint.position;
-        spawnPoint.x = spawnPoint.x + Random.Range(-_randomPoint, _randomPoint);
-        var  playerObject = PhotonNetwork.Instantiate(_playerPrefeb.name, spawnPoint,Quaternion.identity);
+        Vector2 playerPosition;
+        if (PlayerPrefs.HasKey("positionX"))
+        {
+            playerPosition = new Vector2(PlayerPrefs.GetFloat("positionX"),
+                                                               PlayerPrefs.GetFloat("positionY"));
+        }
+        else
+        {
+            playerPosition = _startPotint.position;
+            playerPosition.x = playerPosition.x + Random.Range(-_randomPoint, _randomPoint);
+        }
+
+        var  playerObject = PhotonNetwork.Instantiate(_playerPrefeb.name, playerPosition, Quaternion.identity);
         var NickNameControl = playerObject.GetComponentInChildren<PlayerNickNameControl>();
 
         NickNameControl.SetNickName( FirebaseDbManager.Instance.GetUserNickName());
