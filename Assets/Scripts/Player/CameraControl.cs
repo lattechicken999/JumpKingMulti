@@ -38,7 +38,7 @@ public class CameraControl : MonoBehaviourPun,IGameClearOpserver
         if (photonView.IsMine)
             InGameManager.Instance.UnregistGameClearSub(this);
     }
-    private void OnBecameInvisible()
+    private void FixedUpdate()
     {
         if (!photonView.IsMine) return;
         Vector2 viewPoint = Camera.main.WorldToViewportPoint(transform.position);
@@ -51,4 +51,17 @@ public class CameraControl : MonoBehaviourPun,IGameClearOpserver
             _cam.transform.position -= new Vector3(0, _camMovePoint, 0);
         }
     }
+    //private void OnBecameInvisible()
+    //{
+    //    if (!photonView.IsMine) return;
+    //    Vector2 viewPoint = Camera.main.WorldToViewportPoint(transform.position);
+    //    if (viewPoint.y >= 0.8)
+    //    {
+    //        _cam.transform.position += new Vector3(0, _camMovePoint, 0);
+    //    }
+    //    else if (viewPoint.y <= 0.2)
+    //    {
+    //        _cam.transform.position -= new Vector3(0, _camMovePoint, 0);
+    //    }
+    //}
 }
