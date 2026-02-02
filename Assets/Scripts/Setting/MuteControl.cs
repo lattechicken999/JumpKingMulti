@@ -7,13 +7,6 @@ public class MuteControl : MonoBehaviour
     [SerializeField] Toggle _muteToggle;
     private bool muted;
 
-    //private void Awake()
-    //{
-    //    if(PlayerPrefs.HasKey("Mute"))
-    //    {
-    //        BGMSoundManager.Instance.SetBGMMuteState(PlayerPrefs.GetInt("Mute") == 1);
-    //    }
-    //}
     private void OnEnable()
     {
         muted = BGMSoundManager.Instance.GetBGMMuteState();

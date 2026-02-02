@@ -13,10 +13,14 @@ public class EscInputControl : MonoBehaviour
 
     private void Start()
     {
-        _escAction.started += (ctx) => _setting.SetActive(!_activeTrigger);
+        _escAction.started += (ctx) =>
+            _setting.SetActive(!_activeTrigger);
+
     }
     private void OnDestroy()
     {
-        _escAction.started -= (ctx) => _setting.SetActive(!_activeTrigger);
+        _escAction.started -= (ctx) =>
+            _setting.SetActive(!_activeTrigger);
+
     }
 }

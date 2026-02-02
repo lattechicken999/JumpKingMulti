@@ -8,12 +8,28 @@ public class PlayerInputHandler : MonoBehaviourPunCallbacks,IPunObservable,IGame
     [SerializeField] PlayerInvoker _player;
     private InputAction _moveAction;
     private InputAction _jumpAction;
-    private InputAction _settingAction;
 
     private SpriteRenderer _playerRenderer;
     float lastCommandTime;
 
     public PlayerInvoker Player => _player;
+
+    public void EnablePlayerInputHandler()
+    {
+        if (!photonView.IsMine) return;
+        _moveAction.performed += OnMove;
+        _moveAction.canceled += OnMove;
+        _jumpAction.performed += OnJump;
+        _jumpAction.canceled += OnJump;
+    }
+    public void DisablePlayerInputHandler()
+    {
+        if (!photonView.IsMine) return;
+        _moveAction.performed -= OnMove;
+        _moveAction.canceled -= OnMove;
+        _jumpAction.performed -= OnJump;
+        _jumpAction.canceled -= OnJump;
+    }
 
     private void Awake()
     {
@@ -23,20 +39,12 @@ public class PlayerInputHandler : MonoBehaviourPunCallbacks,IPunObservable,IGame
     }
     private void Start()
     {
-        if (!photonView.IsMine) return;
-        _moveAction.performed += OnMove;
-        _moveAction.canceled += OnMove;
-        _jumpAction.performed += OnJump;
-        _jumpAction.canceled += OnJump;
+        EnablePlayerInputHandler();
     }
 
     public override void OnDisable()
     {
-        if (!photonView.IsMine) return;
-        _moveAction.performed -= OnMove;
-        _moveAction.canceled -= OnMove;
-        _jumpAction.performed -= OnJump;
-        _jumpAction.canceled -= OnJump;
+        DisablePlayerInputHandler();
     }
 
     [PunRPC]
@@ -46,7 +54,7 @@ public class PlayerInputHandler : MonoBehaviourPunCallbacks,IPunObservable,IGame
         {
             _playerRenderer.flipX = true;
         }
-        else
+        else if(dirx > 0)
         {
             _playerRenderer.flipX = false;
         }

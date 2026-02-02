@@ -49,15 +49,21 @@ public class PlayerInvoker : MonoBehaviourPun
         _isPressJumpkey = false;
 
         //점프시 고정 해제
-        _rig.constraints = RigidbodyConstraints2D.FreezeRotation;
+        //_rig.constraints = RigidbodyConstraints2D.FreezeRotation;
 
         float gagePersent = Mathf.Clamp( _jumpGage / _maximumGageValue, _minimumGageValue/_maximumGageValue,0.7f);
         Vector2 jumpDir = _dir * (1 - gagePersent) + Vector2.up * (gagePersent);
-        _rig.AddForce(jumpDir.normalized * _jumpGage, ForceMode2D.Impulse);
+        //_rig.AddForce(jumpDir.normalized * _jumpGage, ForceMode2D.Impulse);
+        photonView.RPC("PlayerJump",RpcTarget.All, jumpDir.normalized * _jumpGage);
 
         _ani.SetBool("JumpKeyPres", false);
     }
 
+    [PunRPC]
+    private void PlayerJump(Vector2 jumpVector)
+    {
+        _rig.AddForce(jumpVector, ForceMode2D.Impulse);
+    }
     public void PlayerCollisionAct(Vector2 activeVelocity)
     {
         _rig.linearVelocity = activeVelocity;
