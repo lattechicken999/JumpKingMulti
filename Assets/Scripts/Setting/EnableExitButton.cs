@@ -7,9 +7,10 @@ public class EnableExitButton : MonoBehaviour
     [SerializeField] TMP_InputField _oathInputField;
     [SerializeField] Button _ExitGame;
 
-    private void Awake()
+    private void OnEnable()
     {
         _ExitGame.interactable = false;
+        _oathInputField.text = "";
     }
     public void OnChangeInputField()
     {

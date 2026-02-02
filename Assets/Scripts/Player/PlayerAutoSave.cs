@@ -1,7 +1,8 @@
 ﻿using System.Collections;
 using UnityEngine;
+using Photon.Pun;
 
-public class PlayerAutoSave : MonoBehaviour
+public class PlayerAutoSave : MonoBehaviourPun
 {
     WaitForSeconds _sleep;
     private Coroutine _autoSaveCoroutine;
@@ -16,10 +17,12 @@ public class PlayerAutoSave : MonoBehaviour
     }
     private void OnDestroy()
     {
-        StopCoroutine(_autoSaveCoroutine);
+        if(_autoSaveCoroutine != null)
+            StopCoroutine(_autoSaveCoroutine);
     }
     private IEnumerator AutoSaveCoroutine()
     {
+        if (!photonView.IsMine) yield break;
         while(true)
         {
             PlayerPrefs.SetFloat("positionX",transform.position.x);
