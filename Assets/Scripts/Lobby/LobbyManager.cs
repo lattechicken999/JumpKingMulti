@@ -27,6 +27,8 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         PlayerPrefs.DeleteKey("positionX");
         PlayerPrefs.DeleteKey("positionY");
+        PlayerPrefs.DeleteKey("Time");
+
         PlayerPrefs.Save();
         EffectSoundManager.Instance.PlayClickSound();
         PhotonNetwork.JoinRandomOrCreateRoom();

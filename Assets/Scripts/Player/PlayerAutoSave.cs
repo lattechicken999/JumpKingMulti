@@ -2,7 +2,7 @@
 using UnityEngine;
 using Photon.Pun;
 
-public class PlayerAutoSave : MonoBehaviourPun
+public class PlayerAutoSave : MonoBehaviourPun,IGameClearOpserver
 {
     WaitForSeconds _sleep;
     private Coroutine _autoSaveCoroutine;
@@ -13,12 +13,16 @@ public class PlayerAutoSave : MonoBehaviourPun
 
     private void Start()
     {
+        if (!photonView.IsMine) return;
         _autoSaveCoroutine = StartCoroutine(AutoSaveCoroutine());
+        InGameManager.Instance.RegistGameClearSub(this);
     }
     private void OnDestroy()
     {
-        if(_autoSaveCoroutine != null)
+        if (!photonView.IsMine) return;
+        if (_autoSaveCoroutine != null)
             StopCoroutine(_autoSaveCoroutine);
+        InGameManager.Instance.UnregistGameClearSub(this);  
     }
     private IEnumerator AutoSaveCoroutine()
     {
@@ -32,5 +36,13 @@ public class PlayerAutoSave : MonoBehaviourPun
 
         }
         
+    }
+
+    public void GameClear()
+    {
+        if (_autoSaveCoroutine != null)
+            StopCoroutine(_autoSaveCoroutine);
+        PlayerPrefs.DeleteKey("positionX");
+        PlayerPrefs.DeleteKey("positionY");
     }
 }
