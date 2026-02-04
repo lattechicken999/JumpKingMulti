@@ -35,7 +35,7 @@ public class PlayerInteractableHandler : MonoBehaviourPun
             if (colsVector.y > 0.9f)
             {
                 //땅에 닿을 때는 취소
-                _playerHandler.RecordAndExcute(new OnGroundCommand(_playerHandler.Player, true));
+                _playerHandler.CommandExcute(new OnGroundCommand(_playerHandler.Player, true));
                 return;
             }
 
@@ -52,7 +52,7 @@ public class PlayerInteractableHandler : MonoBehaviourPun
             convertVelocity *= 0.8f;
             
 
-            _playerHandler.RecordAndExcute(new CollisionCommmand(_playerHandler.Player, convertVelocity));
+            _playerHandler.CommandExcute(new CollisionCommmand(_playerHandler.Player, convertVelocity));
         }
        
     }
@@ -60,12 +60,12 @@ public class PlayerInteractableHandler : MonoBehaviourPun
     {
         if (collision.contacts.Length == 0)
         {
-            _playerHandler.RecordAndExcute(new OnGroundCommand(_playerHandler.Player, false));
+            _playerHandler.CommandExcute(new OnGroundCommand(_playerHandler.Player, false));
             return;
         }
         if (collision.contacts[0].normal.y < -0.9f)
         {
-            _playerHandler.RecordAndExcute(new OnGroundCommand(_playerHandler.Player, false));
+            _playerHandler.CommandExcute(new OnGroundCommand(_playerHandler.Player, false));
             return;
         }
     }

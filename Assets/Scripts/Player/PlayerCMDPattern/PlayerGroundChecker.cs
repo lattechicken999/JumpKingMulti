@@ -6,10 +6,10 @@ public class PlayerGroundChecker : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        _playerHandler.RecordAndExcute(new OnGroundCommand(_playerHandler.Player, true));
+        _playerHandler.CommandExcute(new OnGroundCommand(_playerHandler.Player, true));
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
-        _playerHandler.RecordAndExcute(new OnGroundCommand(_playerHandler.Player, false));
+        _playerHandler.CommandExcute(new OnGroundCommand(_playerHandler.Player, false));
     }
 }

@@ -63,23 +63,23 @@ public class PlayerInputHandler : MonoBehaviourPunCallbacks,IPunObservable,IGame
     {
         Vector2 dir = ctx.ReadValue<Vector2>();
         photonView.RPC("SetSpriteRendererFlip", RpcTarget.All, dir.x);
-        RecordAndExcute(new MoveCommand(_player, dir));
+        CommandExcute(new MoveCommand(_player, dir));
     }
     private void OnJump(InputAction.CallbackContext ctx)
     {
         if(!ctx.ReadValueAsButton())
             EffectSoundManager.Instance.PlayJumpSound();
-        RecordAndExcute(new JumpCommand(_player,ctx.ReadValueAsButton()));
+        CommandExcute(new JumpCommand(_player,ctx.ReadValueAsButton()));
     }
-    public void RecordAndExcute(IPlayerCommand command)
+    public void CommandExcute(IPlayerCommand command)
     {
         float now = Time.time;
         float gap = now - lastCommandTime;
-        if (gap > 0.01f)
-        {
-            _recorder.Record(new WaitCommand(gap));
-        }
-        _recorder.Record(command);
+        //if (gap > 0.01f)
+        //{
+        //    _recorder.Record(new WaitCommand(gap));
+        //}
+        //_recorder.Record(command);
         lastCommandTime = now;
         command.Execute();
     }
