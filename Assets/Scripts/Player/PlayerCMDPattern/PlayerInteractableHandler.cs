@@ -32,7 +32,7 @@ public class PlayerInteractableHandler : MonoBehaviourPun
             Vector2 convertVelocity = collision.relativeVelocity;
 
             //법선 백터 방식으로 변경
-            if (colsVector.y > 0.9f)
+            if (colsVector.y > 0.99f)
             {
                 //땅에 닿을 때는 취소
                 _playerHandler.CommandExcute(new OnGroundCommand(_playerHandler.Player, true));
@@ -56,6 +56,20 @@ public class PlayerInteractableHandler : MonoBehaviourPun
         }
        
     }
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision.contacts.Length == 0)
+        {
+            _playerHandler.CommandExcute(new OnGroundCommand(_playerHandler.Player, false));
+            return;
+        }
+        if (collision.contacts[0].normal.x > -0.9f)
+        {
+            _playerHandler.CommandExcute(new OnGroundCommand(_playerHandler.Player, false));
+            return;
+        }
+    }
+
     private void OnCollisionExit2D(Collision2D collision)
     {
         if (collision.contacts.Length == 0)
